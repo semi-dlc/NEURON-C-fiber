@@ -18,8 +18,8 @@ from itertools import zip_longest
 #dt: step size in time, if set to zero, CVode is activated
 #previousStim: sets a pre stimulation before the regular stimulation protocol, if the protocol is loaded from file
 def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, tempBranch=32, tempParent=37, 
-        gPump=-0.00485891709589456, gNav17=0.33198932295899997, gNav17Parent=0.22831806252579703, gNav18=0.04520936848183172, gNav18Parent=0.2411879110860178, gNav19=0.0032208034421239012, 
-        gKs=0.0030962055552702606, gKf=0.025994684685553986, gH=0.009167424690232623, gKdr=0.013875365047132446, gKna=0.0014444412024341238,vRest=-55,
+        gPump=-0.02916656994652002, gNav17=0.2752232350674842, gNav17Parent=0.24692374475822038, gNav18=0.5642096412599458, gNav18Parent=0.3296077564625298, gNav19=0.00018063108879900908, 
+        gKs=0.0022257430345635184, gKf=0.022096419066567365, gH=0.002751364152844911, gKdr=0.010199828771851901, gKna=0.011306247388447238,vRest=-53.11236192110532,
         sine=False, ampSine=0.1, particleNr=0):
     
     #start timer
