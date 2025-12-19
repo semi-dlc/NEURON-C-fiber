@@ -5,7 +5,7 @@
 NEURON {
 	SUFFIX nav1p8
 	USEION na READ ena WRITE ina
- 	RANGE gbar, ena, ina
+ 	RANGE gbar, ena, ina, celsiusT
 }
 
 UNITS {
@@ -17,7 +17,7 @@ UNITS {
 PARAMETER {
 	gbar = 0 (S/cm2) : =220e-9/(100e-12*1e8) (S/cm2) : 220(nS)/100(um)^2       
 	kvot_qt
-        celsiusT	
+    celsiusT	
 	shift_act = 0 (mV)
 	shift_inact =0 (mV)
 }

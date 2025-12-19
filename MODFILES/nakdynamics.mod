@@ -35,9 +35,11 @@ PARAMETER {
 	ki		(mM)
 	ko		(mM)
 
-	theta = 14.5e-3 (um)
-	D = 0.1e-6 	(m/s)	:Scriven1981
+	:theta = 14.5e-3 (um)
+	:D = 0.1e-6 	(m/s)	:Scriven1981
 	
+	theta = 29.0e-3 (um)
+	D = 0.2e-6 	(m/s)	:Scriven1981
 
 }
 

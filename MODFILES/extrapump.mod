@@ -3,9 +3,9 @@
 NEURON {
 	SUFFIX extrapump
 	USEION k WRITE ik
-	RANGE pumpik, pumpina
-        USEION na WRITE ina
-
+    USEION na WRITE ina
+	USEION ca WRITE ica
+	RANGE pumpik, pumpina, pumpica
 }
 
 UNITS {
@@ -16,19 +16,20 @@ UNITS {
 
 PARAMETER {
 	pumpik =0	(mA/cm2)
-        pumpina =0	(mA/cm2)
-
+    pumpina =0	(mA/cm2)
+	pumpica =0	(mA/cm2)
      
 }
 
 ASSIGNED {
 	ik	(mA/cm2)
-        ina     (mA/cm2)
+    ina (mA/cm2)
+	ica (mA/cm2)
 }
 
 
 BREAKPOINT {
-	 
 	ik = pumpik 
-        ina =pumpina
+    ina = pumpina
+	ica = pumpica
 }
