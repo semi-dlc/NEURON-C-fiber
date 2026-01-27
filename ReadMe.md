@@ -13,7 +13,11 @@ It was translated to Python and adapted to run on a high-performance computing c
   Follow the official installation guide: https://www.neuron.yale.edu/neuron/
 2. Compile mod-files:
   Navigate to the MOD_Tigerholm folder and compile the mod files: nrnivmodl MOD_Tigerholm
-3. Run the Model 
+3. Run the Model
+  To execute the model, use: 
+  import main  
+  main.run()
+
   To execute the stochastic model, use: 
   import main_noise_Nav  
   main_noise_Nav.run()
@@ -28,6 +32,7 @@ It was translated to Python and adapted to run on a high-performance computing c
 - main_noise_Nav.py: Creates the nerve cell, runs the simulation, and saves results (stochastic)
 - main_noise_Nav_p.py: Creates the nerve cell, runs the simulation, and saves results (stochasticity and mutation implemented)
 - run.py: Example script to run the model
+- defineCell_noise_Nav.py: Functions for creating the cell 
 - defineCell_noise_Nav.py: Functions for creating the cell (stochastic)
 - defineCell_noise_Nav_p.py: Functions for creating the cell (stochasticity and mutation implemented)
 - dataProcessing.py: Functions for data processing: getFilename(), getData() and calculateLatency()
