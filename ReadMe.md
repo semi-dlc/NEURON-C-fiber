@@ -18,11 +18,18 @@ It was translated to Python and adapted to run on a high-performance computing c
   import main_noise_Nav  
   main_noise_Nav.run()
 
+  To execute the stochastic model with mutation implemented, use: 
+  import main_noise_Nav_p  
+  main_noise_Nav_p.run()
+
 ## File Structure:
 ### Model Files:
 - main.py: Creates the nerve cell, runs the simulation, and saves results
+- main_noise_Nav.py: Creates the nerve cell, runs the simulation, and saves results (stochastic)
+- main_noise_Nav_p.py: Creates the nerve cell, runs the simulation, and saves results (stochasticity and mutation implemented)
 - run.py: Example script to run the model
-- defineCell_noise_Nav.py: Functions for creating the cell
+- defineCell_noise_Nav.py: Functions for creating the cell (stochastic)
+- defineCell_noise_Nav_p.py: Functions for creating the cell (stochasticity and mutation implemented)
 - dataProcessing.py: Functions for data processing: getFilename(), getData() and calculateLatency()
 - stimulationProtocols.py: Predefined stimulation protocols
 
