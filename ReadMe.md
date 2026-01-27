@@ -15,6 +15,7 @@ Stochasticity has been added to the conductances and  gating variables of the th
 2. Compile mod-files:
   Navigate to the MOD_Tigerholm folder and compile the mod files: nrnivmodl MOD_Tigerholm
 3. Run the Model
+   
 i) Deterministic   
   To execute the model, use: 
   import main  
