@@ -7,7 +7,7 @@ import math
 import os
 from os import path
 
-from defineCell_noise17_18_19_1000 import *
+from defineCell_noise_Nav import *
 from stimulationProtocols import *
 #from saveData import *
 #from plot import *
