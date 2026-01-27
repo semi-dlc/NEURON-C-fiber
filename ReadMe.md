@@ -3,6 +3,7 @@
 This computational model simulates the biophysical properties of C-fibers, a class of unmyelinated sensory nerve fibers 
 involved in pain perception. The model incorporates detailed ion channel dynamics, including sodium and potassium channels.
 It was translated to Python and adapted to run on a high-performance computing cluster (HPC). 
+Stochasticity has been added to the conductances and  gating variables of the three sodium channels: Nav1.7, Nav1.8, and Nav1.9. 
 
 ## Requirements:
 - NEURON v7.8 or higher
@@ -14,14 +15,17 @@ It was translated to Python and adapted to run on a high-performance computing c
 2. Compile mod-files:
   Navigate to the MOD_Tigerholm folder and compile the mod files: nrnivmodl MOD_Tigerholm
 3. Run the Model
+i) Deterministic   
   To execute the model, use: 
   import main  
   main.run()
 
+ii) Stochastic
   To execute the stochastic model, use: 
   import main_noise_Nav  
   main_noise_Nav.run()
 
+iii) Stochastic with mutation implemented
   To execute the stochastic model with mutation implemented, use: 
   import main_noise_Nav_p  
   main_noise_Nav_p.run()
