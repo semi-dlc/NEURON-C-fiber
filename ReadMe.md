@@ -14,15 +14,15 @@ It was translated to Python and adapted to run on a high-performance computing c
 2. Compile mod-files:
   Navigate to the MOD_Tigerholm folder and compile the mod files: nrnivmodl MOD_Tigerholm
 3. Run the Model 
-  To execute the model, use: 
-  import main  
-  main.run()
+  To execute the stochastic model, use: 
+  import main_noise_Nav  
+  main_noise_Nav.run()
 
 ## File Structure:
 ### Model Files:
 - main.py: Creates the nerve cell, runs the simulation, and saves results
 - run.py: Example script to run the model
-- defineCell.py: Functions for creating the cell
+- defineCell_noise_Nav.py: Functions for creating the cell
 - dataProcessing.py: Functions for data processing: getFilename(), getData() and calculateLatency()
 - stimulationProtocols.py: Predefined stimulation protocols
 
