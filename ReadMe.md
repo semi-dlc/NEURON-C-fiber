@@ -1,4 +1,4 @@
-# Computational Model of a C-fiber
+# Stochastic Computational Model of a C-fiber
 
 This computational model simulates the biophysical properties of C-fibers, a class of unmyelinated sensory nerve fibers 
 involved in pain perception. The model incorporates detailed ion channel dynamics, including sodium and potassium channels.
