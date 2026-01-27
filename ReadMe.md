@@ -18,16 +18,19 @@ Stochasticity has been added to the conductances and  gating variables of the th
    
 i) Deterministic   
   To execute the model, use: 
+  
   import main  
   main.run()
 
 ii) Stochastic
   To execute the stochastic model, use: 
+  
   import main_noise_Nav  
   main_noise_Nav.run()
 
 iii) Stochastic with mutation implemented
   To execute the stochastic model with mutation implemented, use: 
+  
   import main_noise_Nav_p  
   main_noise_Nav_p.run()
 
