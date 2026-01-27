@@ -23,14 +23,12 @@ i) Deterministic
   main.run()
 
 ii) Stochastic
-
   To execute the stochastic model, use: 
   
   import main_noise_Nav  
   main_noise_Nav.run()
 
 iii) Stochastic with mutation implemented
-
   To execute the stochastic model with mutation implemented, use: 
   
   import main_noise_Nav_p  
@@ -42,7 +40,7 @@ iii) Stochastic with mutation implemented
 - main_noise_Nav.py: Creates the nerve cell, runs the simulation, and saves results (stochastic)
 - main_noise_Nav_p.py: Creates the nerve cell, runs the simulation, and saves results (stochasticity and mutation implemented)
 - run.py: Example script to run the model
-- defineCell_noise_Nav.py: Functions for creating the cell 
+- defineCell.py: Functions for creating the cell 
 - defineCell_noise_Nav.py: Functions for creating the cell (stochastic)
 - defineCell_noise_Nav_p.py: Functions for creating the cell (stochasticity and mutation implemented)
 - dataProcessing.py: Functions for data processing: getFilename(), getData() and calculateLatency()
