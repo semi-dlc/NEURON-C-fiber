@@ -23,12 +23,14 @@ i) Deterministic
   main.run()
 
 ii) Stochastic
+
   To execute the stochastic model, use: 
   
   import main_noise_Nav  
   main_noise_Nav.run()
 
 iii) Stochastic with mutation implemented
+
   To execute the stochastic model with mutation implemented, use: 
   
   import main_noise_Nav_p  
