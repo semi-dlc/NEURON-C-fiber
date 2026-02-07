@@ -13,7 +13,8 @@ Stochasticity has been added to the conductances and  gating variables of the th
 1. Install NEURON: 
   Follow the official installation guide: https://www.neuron.yale.edu/neuron/
 2. Compile mod-files:
-  Navigate to the MOD_Tigerholm folder and compile the mod files: nrnivmodl MOD_Tigerholm
+  Navigate to the MOD_Tigerholm folder and ensure it has all .mod files
+  Compile nrnivmodl of MOD_Tigerholm in NEURON
 3. Run the Model
    
 i) Deterministic   
@@ -63,6 +64,8 @@ If you use this model in your research, please cite the following publication(s)
 "Maxion, A., et al. (2023). A modeling study to dissect the potential role of voltage-gated ion channels in 
 activity-dependent conduction velocity changes as identified in small fiber neuropathy patients. Frontiers 
 in Computational Neuroscience, 17. https://doi.org/10.3389/fncom.2023.1265958"
+
+Roseira, J. 
 
 ## License:
 This project is licensed under the Apache License 2.0. 
