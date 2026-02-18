@@ -57,7 +57,7 @@ def upper(ion):
     gKdr=0.018002 
     gKna=0.00042
     vRest=-55
-    '''
+    
     if ion==gKdr or ion==gNav18:
         return 2*ion
     elif ion==gH:
@@ -68,15 +68,7 @@ def upper(ion):
         return vRest+10
     else:
         return 4*ion
-    '''
-    if ion==gKna:
-        return 40*ion
-    elif ion==gPump:
-        return 7*ion
-    elif ion==vRest:
-        return ion+10
-    else:
-        return 6*ion
+    
     #return ion+(0.5*ion)
     #return 4.5#beale
     #return 2*math.pi#mishra bird
@@ -650,28 +642,25 @@ def plotRealData(filename):
 def plotRealSim(filenameReal, data_aps, data_stim, fiberType, norm=False):
     
     data2, CM, CMi, VHT = dataProcessing.getRealData(filenameReal)
+    l = dataProcessing.calculateLatency(data_aps, data_stim, norm)
     
-    plt.figure(figsize=(15,5))
+    plt.figure()
     
     if fiberType=="CM":
         mean=data2[CM].mean(axis=1)
         std=data2[CM].sem(axis=1)
-        plt.errorbar(range(len(mean)),mean, std, linestyle='None', marker='.', label="CM", color="black", ecolor="grey")
+        plt.plot(l[:,0],mean[0:len(l[:,0])],label="CM", color="red", marker='.')
     elif fiberType=="CMi":
         mean=data2[CMi].mean(axis=1)
         std=data2[CMi].sem(axis=1)
-        plt.errorbar(range(len(mean)),mean, std, linestyle='None', marker='.', label="CMi", color="black", ecolor="grey")
+        plt.plot(l[:,0],mean[0:len(l[:,0])],label="CMi", color="red", marker='.')
     elif fiberType=="VHT":
         mean=data2[VHT].mean(axis=1)
         std=data2[VHT].sem(axis=1)
-        plt.errorbar(range(len(mean)),mean, std, linestyle='None', marker='.', label="VHT", color="black", ecolor="grey")
-    #print(data_stim)
-    l = dataProcessing.calculateLatency(data_aps, data_stim, norm)
-    #print(data_aps)
-    #print(l)
-       
+        plt.plot(l[:,0],mean[0:len(l[:,0])],label="VHT", color="red", marker='.')
+           
     if len(l)>0:
-        plt.scatter(range(len(l)),l[:,1], label="Simulation", color="red")
+        plt.plot(l[:,0],l[:,1], label="Simulation", marker='.', zorder=10, color="darkblue")
         plt.xlabel('time (s)')
         if norm:
             plt.ylabel('latency (%)')
@@ -681,7 +670,7 @@ def plotRealSim(filenameReal, data_aps, data_stim, fiberType, norm=False):
         plt.legend()
         plt.show()
     
-def plotRealSimODP(filenameReal, pathSim, scalingFactor, norm, particle, fibertype="CMi"):
+def plotRealSimODP(filenameReal, pathSim, scalingFactor, norm, particle, fibertype="CMi", title="Recovery Cycle"):
     fig, ax=plt.subplots(figsize=(15,5))
 
     data2, CM, CMi, VHT=dataProcessing.getRealDataODP(filenameReal)
@@ -722,7 +711,7 @@ def plotRealSimODP(filenameReal, pathSim, scalingFactor, norm, particle, fiberty
         plt.ylabel('slowing (%)')
     else:
         plt.ylabel('slowing (ms)')
-    plt.title("Recovery Cycle")
+    plt.title(title)
     plt.legend()
     plt.savefig("Figures/Optimization-RecoveryCycle", bbox_inches='tight', dpi=300)
                 

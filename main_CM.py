@@ -17,9 +17,9 @@ from itertools import zip_longest
 #gNav18: conductance of Nav 1.8
 #dt: step size in time, if set to zero, CVode is activated
 #previousStim: sets a pre stimulation before the regular stimulation protocol, if the protocol is loaded from file
-def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, tempBranch=32, tempParent=37, 
-        gPump=-0.02916656994652002, gNav17=0.2752232350674842, gNav17Parent=0.24692374475822038, gNav18=0.5642096412599458, gNav18Parent=0.3296077564625298, gNav19=0.00018063108879900908, 
-        gKs=0.0022257430345635184, gKf=0.022096419066567365, gH=0.002751364152844911, gKdr=0.010199828771851901, gKna=0.011306247388447238,vRest=-53.11236192110532,
+def run(prot=1, path="Results", scalingFactor=1,  dt=0, previousStim=False, tempBranch=32, tempParent=37, 
+        gPump=-0.0025, gNav17=0.24686453257354574, gNav17Parent=0.13115152763095123, gNav18=0.37673567973121774, gNav18Parent=0.23439203005798895, gNav19=0.00017254238997420438, 
+        gKs=0.008865226128662577, gKf=0.02709394494148292, gH=0.014140202887083592, gKdr=0.008469950837206652, gKna=0.001398204170298818,vRest=-50,
         sine=False, ampSine=0.1, particleNr=0):
     
     #start timer
@@ -32,6 +32,43 @@ def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, te
     saveSpikes=True
     saveConcentrations=True
     saveStimulation=True
+    saveParameters=True
+
+    #create folder
+    if not os.path.exists(path):
+        os.makedirs(path)
+        #os.mkdir(path)
+
+    if saveParameters:
+        #save parameter values
+        fileParams = str(path)+'/params'+'_Prot'+str(prot)+'.csv'
+        #if file does not exist, create it
+        #if not os.path.isfile(fileParams):
+        with open(fileParams,'w', newline='') as f:
+            csv.writer(f).writerow(["Paramter", "Value"])
+            csv.writer(f).writerow(["prot", prot])
+            csv.writer(f).writerow(["path", path])
+            csv.writer(f).writerow(["scalingFactor", scalingFactor])
+            csv.writer(f).writerow(["dt", dt])
+            csv.writer(f).writerow(["previousStim", previousStim])
+            csv.writer(f).writerow(["tempBranch", tempBranch])
+            csv.writer(f).writerow(["tempParent", tempParent])
+            csv.writer(f).writerow(["gPump", gPump])
+            csv.writer(f).writerow(["gNav17", gNav17])
+            csv.writer(f).writerow(["gNav17Parent", gNav17Parent])
+            csv.writer(f).writerow(["gNav18", gNav18])
+            csv.writer(f).writerow(["gNav18Parent", gNav18Parent])
+            csv.writer(f).writerow(["gNav19", gNav19])
+            csv.writer(f).writerow(["gKs", gKs])
+            csv.writer(f).writerow(["gKf", gKf])
+            csv.writer(f).writerow(["gH", gH])
+            csv.writer(f).writerow(["gKdr", gKdr])
+            csv.writer(f).writerow(["gKna", gKna])
+            csv.writer(f).writerow(["vRest", vRest])
+            csv.writer(f).writerow(["sine", sine])
+            csv.writer(f).writerow(["ampSine", ampSine])
+            csv.writer(f).writerow(["particleNr", particleNr])
+                
     
     #define morphology as in Tigerholm
     axon=[0,0,0,0,0,0]
@@ -66,7 +103,7 @@ def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, te
     axon[5].L = 100*scalingFactor
     
     for i in range(6):
-        axon[i].Ra = 100
+        axon[i].Ra = 35.5
         axon[i].cm = 1
     
     #connect parts
@@ -111,6 +148,7 @@ def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, te
         #print("Stimulation: Sine Wave")
     else:
         stim, delay, vec = setStimulationProtocol(axon[0], prot, previousStim)
+        print(vec)
         #print("Stimulation: Square Pulse")
     
     if saveSpikes:
@@ -326,6 +364,13 @@ def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, te
         save_ko = h.Vector().record(axon[3](1)._ref_ko)
         save_ena = h.Vector().record(axon[3](1)._ref_ena)
         save_ek = h.Vector().record(axon[3](1)._ref_ek)
+
+        save_nai_b = h.Vector().record(axon[1](1)._ref_nai)
+        save_ki_b = h.Vector().record(axon[1](1)._ref_ki)
+        save_nao_b = h.Vector().record(axon[1](1)._ref_nao)
+        save_ko_b = h.Vector().record(axon[1](1)._ref_ko)
+        save_ena_b = h.Vector().record(axon[1](1)._ref_ena)
+        save_ek_b = h.Vector().record(axon[1](1)._ref_ek)
         
     #simulation
     Vrest=vRest
@@ -350,10 +395,7 @@ def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, te
     
     #myPrint("ScoreBalance",scoreBalance)
     
-    #create folder
-    if not os.path.exists(path):
-        os.makedirs(path)
-        #os.mkdir(path)
+    
     
     #create filename
     if isinstance(prot, str) and "/" in prot:
@@ -390,13 +432,11 @@ def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, te
         #save stimulation times
         fileStim = str(path)+'/stim'+'_Prot'+str(prot)+'.csv'
         #if file does not exist, create it
-        if not os.path.isfile(fileStim):
-            with open(fileStim,'w', newline='') as f:
-                csv.writer(f).writerow(["StimTime"])
-
+        #if not os.path.isfile(fileStim):
+        with open(fileStim,'w', newline='') as f:
+            csv.writer(f).writerow(["StimTime"])
             for stimTime in vec:
-                with open(fileStim,'a', newline='') as f:
-                    csv.writer(f).writerow([stimTime])
+                csv.writer(f).writerow([stimTime])
         #print("saved stim, path: ", fileStim)
     
     #start simulation
@@ -447,7 +487,7 @@ def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, te
     if savePotential:
         #Parent
         #save membrane potential
-        filename = str(path)+'/potential'+fileSuffix
+        filename = str(path)+'/potential_parent'+fileSuffix
 
         #creates file, deletes content, if file already exists
         with open(filename,'w', newline='') as f:
@@ -477,6 +517,12 @@ def run(prot=1, path="Results", scalingFactor=0.1,  dt=0, previousStim=False, te
         with open(filenameConc,'w', newline='') as f:
             csv.writer(f).writerow(["Time", "Nai", "Ki", "Nao", "Ko", "ena", "ek"])
             csv.writer(f).writerows(zip(*(t, save_nai, save_ki, save_nao, save_ko, save_ena, save_ek)))
+
+        filenameConc = str(path)+'/concentrations_branch'+fileSuffix
+        #creates file, deletes content, if file already exists
+        with open(filenameConc,'w', newline='') as f:
+            csv.writer(f).writerow(["Time", "Nai", "Ki", "Nao", "Ko", "ena", "ek"])
+            csv.writer(f).writerows(zip(*(t, save_nai_b, save_ki_b, save_nao_b, save_ko_b, save_ena_b, save_ek_b)))
         '''
         #Branch 
         #save membrane potential

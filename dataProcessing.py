@@ -209,7 +209,7 @@ def getRealData(filename):
     data2 = pd.read_excel(filename, index_col=None, header=4)  
 
     data2 =data2.drop(1)
-    data2 =data2.drop("fiber id",1)
+    data2 =data2.drop(labels="fiber id",axis=1)
 
     CM=[]
     CMi=[]
@@ -249,5 +249,6 @@ def getRealDataODP(filename):
         elif row['unit class'] == "vht":
             VHT.append(index)
     
+    data=data.drop(['unit class', 'unit type'], axis=1)
     return data, CM, CMi, VHT
     
