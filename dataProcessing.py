@@ -76,3 +76,9 @@ def calculateLatency(data_aps, data_stim, norm=True):
             j=j+1
     return l
 
+# this can be written so much more efficiently
+# data_aps, data_stim in us
+# dx in mm
+# output in mm/us = m/ms
+def calculateVelocity(data_aps, data_stim, dx=125):
+    return dx / calculateLatency(data_aps, data_stim)
