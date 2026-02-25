@@ -365,6 +365,10 @@ def setStimulationProtocol(axon, prot, previousStim):
     elif prot==41:
         vec, delay = getCOVID025Hz()
 
+    elif prot==42:
+        vec, delay = getCOVIDFull()
+    elif prot==43:
+        vec, delay = getCOVID2Hz(n=50)
     else:#Get protocol from file
         vec, delay = getProtFromFile(prot)
         
@@ -511,11 +515,11 @@ def getTigerholmLowfreq():
     return vec, delay
 
 # adapted from getTigerholmHighFreq
-def getCOVID2Hz():
+def getCOVID2Hz(n=360):
     vec=[]
     delay = 10
     vec.append(delay)
-    for x in range(360):#360 pulses with 2Hz frequency
+    for x in range(n):#360 pulses with 2Hz frequency
         delay = delay+500
         vec.append(delay)
     #print(vec)
@@ -526,12 +530,35 @@ def getCOVID025Hz():
     vec=[]
     delay = 10
     vec.append(delay)
-    for x in range(360):#360 pulses with 2Hz frequency
+    for x in range(360):#360 pulses with 0.25Hz frequency
         delay = delay+4000
         vec.append(delay)
     #print(vec)
     delay = delay+100
     return vec, delay
+
+def getCOVIDFull():
+    vec=[]
+    delay = 10
+    vec.append(delay)
+    for x in range(90):# 360 pulses with 0.25Hz frequency, 6min
+        delay = delay+4000
+        vec.append(delay)
+    for x in range(360):# 360 pulses with 2Hz frequency, 3min
+        delay = delay+500
+        vec.append(delay)
+    for x in range(45):# 180 pulses with 0.25Hz frequency, 3min
+        delay = delay+4000
+        vec.append(delay)
+    #print(vec)
+    delay = delay+100
+    return vec, delay
+
+# in us
+def getCOVIDFullTime(n):
+    vec, delay = getCOVIDFull()
+    return vec[n]
+
         
 def getProtFromFile(filename):    
     lines = open(filename).readlines()
