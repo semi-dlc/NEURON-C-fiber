@@ -69,7 +69,7 @@ def calculateLatency(data_aps, data_stim, norm=True):
             break
     #normalize
     if norm:
-        first=l[0]
+        first=l[0] + 1e-9 # if 0
         j=0
         for i in l:
             l[j]=(i/first-1)*100

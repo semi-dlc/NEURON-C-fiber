@@ -10,7 +10,7 @@ from os import path
 from defineCell import *
 from stimulationProtocols import *
 #from saveData import *
-#from plot import *
+from plot import *
 
 #prot: stimulation protocol number or filename
 #gPump: conductance of pump
@@ -84,7 +84,10 @@ def run(prot=1, scalingFactor=1,  dt=0, previousStim=False, tempBranch=32, tempP
     
     for i in range(6):
         condFactor=1
-        if i==0 or i==5:
+        # if i==1 : injection patch is sealed -> no spike is transmitted
+        # i == 5: end
+        # i == 4: ?
+        if i==4 or i==5:
             condFactor=1e-5
         insertChannels(axon[i], condFactor, gPump, gNav17, gNav18, gNav19, gKs, gKf, gH, gKdr, gKna)
     
@@ -249,14 +252,16 @@ def run(prot=1, scalingFactor=1,  dt=0, previousStim=False, tempBranch=32, tempP
     
 
     #plot 
-    #l = plotLatency(spTimes10, vec)
+    # l = plotLatency(spTimes10, vec)
     
     #print(v3)
-    #for x in spTimes: print(x)
+    for x in spTimes: print(x)
     
     toc = time.perf_counter()
     print(f"Simulation time: {(toc - tic)/60:0.4f} min")
     #return t, v_mid
+
+
 
 '''
 def range_assignment(sec, var, start, stop):
