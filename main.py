@@ -18,10 +18,10 @@ from plot import *
 #gNav18: conductance of Nav 1.8
 #dt: step size in time, if set to zero, CVode is activated
 #previousStim: sets a pre stimulation before the regular stimulation protocol, if the protocol is loaded from file
-def run(prot=1, scalingFactor=1,  dt=0, previousStim=False, tempBranch=32, tempParent=37, 
-        gPump=-0.0047891, gNav17=0.10664, gNav18=0.24271, gNav19=9.4779e-05, 
-        gKs=0.0069733, gKf=0.012756, gH=0.0025377, gKdr=0.018002, gKna=0.00042,vRest=-55,
-        sine=False, ampSine=0.1):
+def run(prot=1, scalingFactor=1, dt=0, previousStim=False, tempBranch=32, tempParent=37,
+        gPump=-0.0047891, gNav17=0.10664, gNav18=0.24271, gNav19=9.4779e-05,
+        gKs=0.0069733, gKf=0.012756, gH=0.0025377, gKdr=0.018002, gKna=0.00042, vRest=-55,
+        sine=False, ampSine=0.1, log_potential=True, path="Results/"):
     
     #start timer
     tic = time.perf_counter()
@@ -175,7 +175,7 @@ def run(prot=1, scalingFactor=1,  dt=0, previousStim=False, tempBranch=32, tempP
     for i in range(6):
         balance(axon[i], Vrest)
     
-    #create folder
+    #create path
     if not os.path.exists('Results'):
         os.mkdir('Results')
     
@@ -208,18 +208,19 @@ def run(prot=1, scalingFactor=1,  dt=0, previousStim=False, tempBranch=32, tempP
                 +'_sine'+str(sine)
                 +'_ampSine'+str(ampSine)
                 +'.csv')
-    filename = 'Results/potential'+fileSuffix
-    
-    #creates file, deletes content, if file already exists
-    with open(filename,'w', newline='') as f:
-        csv.writer(f).writerow(["Time", "Axon 1 0", "Axon 1 0.25", "Axon 1 0.5", "Axon 1 0.75", "Axon 1 1", "Axon 3 0", "Axon 3 0.25", "Axon 3 0.5","Axon 3 0.75","Axon 3 1"])
-        
-    fileSpikes = 'Results/spikes'+fileSuffix
+    filename = path + 'potential' + fileSuffix
+
+    if log_potential:
+        #creates file, deletes content, if file already exists
+        with open(filename,'w', newline='') as f:
+            csv.writer(f).writerow(["Time", "Axon 1 0", "Axon 1 0.25", "Axon 1 0.5", "Axon 1 0.75", "Axon 1 1", "Axon 3 0", "Axon 3 0.25", "Axon 3 0.5","Axon 3 0.75","Axon 3 1"])
+
+    fileSpikes = path + 'spikes' + fileSuffix
     with open(fileSpikes,'w', newline='') as f:
         csv.writer(f).writerow(["Axon 1 0", "Axon 1 0.25", "Axon 1 0.5", "Axon 1 0.75", "Axon 1 1", "Axon 3 0", "Axon 3 0.25", "Axon 3 0.5","Axon 3 0.75","Axon 3 1"])
     
     #Stimulation times
-    fileStim = 'Results/stim'+fileSuffix
+    fileStim = path + 'stim' + fileSuffix
     with open(fileStim,'w', newline='') as f:
         csv.writer(f).writerow(["StimTime"])
         
@@ -232,9 +233,10 @@ def run(prot=1, scalingFactor=1,  dt=0, previousStim=False, tempBranch=32, tempP
     #h.continuerun(tstop)
     i=0
     while(h.t<tstop):
-        #save data
-        with open(filename,'a', newline='') as f:
-            csv.writer(f).writerow([h.t, axon[1](0).v, axon[1](0.25).v, axon[1](0.5).v, axon[1](0.75).v, axon[1](1).v, axon[3](0).v, axon[3](0.25).v, axon[3](0.5).v, axon[3](0.75).v, axon[3](1).v])
+        if log_potential:
+            #save data
+            with open(filename,'a', newline='') as f:
+                csv.writer(f).writerow([h.t, axon[1](0).v, axon[1](0.25).v, axon[1](0.5).v, axon[1](0.75).v, axon[1](1).v, axon[3](0).v, axon[3](0.25).v, axon[3](0.5).v, axon[3](0.75).v, axon[3](1).v])
         if i<len(spTimes) and i<len(spTimes2) and i<len(spTimes3) and i<len(spTimes4) and i<len(spTimes5) and i<len(spTimes6) and i<len(spTimes7) and i<len(spTimes8) and i<len(spTimes9) and i<len(spTimes10):
             print("Time: "+str(h.t))
             print("AP number:"+str(i+1))
