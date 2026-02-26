@@ -5,3 +5,4 @@
 *.c
 /Results
 MOD_Tigerholm/nrnmech.dll
+/temp
