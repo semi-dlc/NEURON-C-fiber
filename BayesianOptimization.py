@@ -1,11 +1,12 @@
 import neuron as neuron
-from dataProcessing import getData, getFilename, calculateLatency, calculateVelocity
+from dataProcessing import getData, getFilename, calculateLatency, calculateVelocity, writeStim
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from stimulationProtocols import getCOVIDFullTime
 from plot import plotLatency, plotRecoveryCycle, getLatency
 import os
+from datetime import datetime
 from skopt import Optimizer
 from skopt.space import Real
 from joblib import Parallel, delayed, parallel_config
@@ -59,23 +60,27 @@ for name in param_names:
         spike = getData(prot=protocol, filetype="spikes", scalingFactor=0.1, gPump=param[0], gNav17=param[1], gNav18=param[2], gNav19=param[3], gKs=param[4], gKf=param[5], gH=param[6], gKdr=param[7], gKna=param[8])
         spikes[name][dg] = spike
 
-data_stim = getData(prot=protocol, filetype="stim")
+# Write stimulation
+#writeStim(prot=protocol, scalingFactor=0.1)
+
+data_stim = getData(prot=protocol, filetype="stim", scalingFactor=0.1)
 
 def get_metrics(data_aps, data_stim, Slow025HzStart=1, Slow025HzEnd=90, Fast2HzStart=90, Fast2HzEnd=450, Fast2HzPost30S=458):
     initial_velocity = calculateVelocity(data_aps, data_stim)[0]
-    latency = calculateLatency(spikes[name][dg], data_stim, norm=False)
+    latency = calculateLatency(data_aps, data_stim, norm=False)
     latency_points = [latency[Slow025HzStart], latency[Fast2HzStart], latency[Fast2HzEnd], latency[Fast2HzPost30S]]
     Slow025StartToEnd = (latency[Slow025HzEnd] - latency[Slow025HzStart]) / latency[Slow025HzStart]
     Slow025EndToFast2HzEnd = (latency[Fast2HzEnd] - latency[Slow025HzEnd]) / latency[Slow025HzEnd]
     # recovery at 30 s (latency at 30 s after 2 Hz stimulation compared to latency before 0.25 Hz stimulation)
     # can be also negative (but unlikely)
     Fast2HzStartToPost30S = (latency[Fast2HzPost30S] - latency[Slow025HzStart]) / latency[Slow025HzStart]
-    TimeTo50Percent = 0 # not implemented yet because it is barely changed by the conductancies
+    TimeTo50Percent = 1. # not implemented yet because it is barely changed by the conductancies
     return (initial_velocity, Slow025StartToEnd, Slow025EndToFast2HzEnd, Fast2HzStartToPost30S, TimeTo50Percent, latency_points)
+
 Slow025HzStart = 1
-Slow025HzEnd = 90
-Fast2HzStart = 90 # 90 stimulations at 0.25 Hz initially
-Fast2HzEnd = 450 # 360 stimulations at 2 Hz
+Slow025HzEnd = 10
+Fast2HzStart = 10 # 90 stimulations at 0.25 Hz initially
+Fast2HzEnd = 20 # 360 stimulations at 2 Hz
 Fast2HzPost30S = Fast2HzEnd + 8 # 32 s after reducing the stimulation frequency from 2 Hz to 0.25 Hz again
 
 points = [Slow025HzStart, Slow025HzEnd, Fast2HzStart, Fast2HzEnd, Fast2HzPost30S, 0]
@@ -96,6 +101,9 @@ for l, c, h, f in zip(experiment_values_labels, experiment_values_covid, experim
     experiment_values[l]["Covid"] = c
     experiment_values[l]["Healthy"] = h
     experiment_values[l]["Factor"] = f
+
+
+
 #%%
 # Optimisation task: Find param that slowing_rel \approx experiment_factors
 # We can treat experiment_factors as the product of slowing_rel
@@ -103,8 +111,8 @@ for l, c, h, f in zip(experiment_values_labels, experiment_values_covid, experim
 # underconstrained problem -> multiple solutions
 # LLM says: add regularization constraints (e.g. least deviation from original parameters)
 #%%
-metric_healthy = np.array(get_metrics(spikes[param_names[0]][changes[i_normal]], data_stim)[0:-1])
-experiment_factors[-1] = 0 # time to 50% recovery ignored for now
+metric_healthy = np.array([5.53490, 0.02826, 0.26480, 0.14407, 1.]) # time to 50% recovery ignored for now
+experiment_factors[-1] = 1. # time to 50% recovery ignored for now
 
 param_min_0 = param_orig * 0.75
 param_max_0 = param_orig * 1.25
@@ -120,10 +128,11 @@ def worker_init_neuron():
 
 
 
+
 # define range as -25% to +50/+25% of the original parameters as param_orig
 def calculate_residual(param, factor_compare=experiment_factors, worker_id=0):
     parameter_sa_run = {
-                    'prot': 42,
+                    'prot': protocol,
                     'sine': False,
                     'scalingFactor': 0.1,
                     'gPump': param[0],
@@ -148,7 +157,17 @@ def calculate_residual(param, factor_compare=experiment_factors, worker_id=0):
 
     spikes_test = getData(**parameter_file )
 
-    metric_test = np.array(get_metrics(spikes_test, data_stim)[0:-1])
+    metric_test = np.array(
+        get_metrics(
+            spikes_test,
+            data_stim,
+            Slow025HzStart=Slow025HzStart,
+            Slow025HzEnd=Slow025HzEnd,
+            Fast2HzStart=Fast2HzStart,
+            Fast2HzEnd=Fast2HzEnd,
+            Fast2HzPost30S=Fast2HzPost30S
+        )[0:-1]
+    )
     factor_metric = metric_test/metric_healthy
 
     residual = np.linalg.norm(factor_metric - factor_compare, ord=2)

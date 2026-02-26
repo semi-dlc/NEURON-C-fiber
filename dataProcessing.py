@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 import os
+import csv
+
+from stimulationProtocols import getCOVIDShort, getCOVIDFull
+
 
 #filetype can be "potential", "spikes" or "stim"
 def getFilename(path="Results", filetype="potential", prot=1, scalingFactor=1, tempBranch=32, tempParent=37, 
@@ -50,6 +54,24 @@ def getData(path="Results", filetype="potential", prot=1, scalingFactor=1, tempB
         data = pd.read_csv(filename)#, index_col=0)#, parse_dates=True, header=None)
         return data
     return None
+
+def writeStim(path="Results", prot=1, scalingFactor=0.1):
+    if prot==42:
+        func = getCOVIDFull
+    elif prot==44:
+        func = getCOVIDShort
+    else:
+        func = lambda x: (None,None)
+
+    vec, delay = func()
+
+    fileStim = getFilename(path, prot=prot, filetype="stim", scalingFactor=scalingFactor)
+    with open(fileStim, 'w', newline='') as f:
+        csv.writer(f).writerow(["StimTime"])
+
+    for stimTime in vec:
+        with open(fileStim, 'a', newline='') as f:
+            csv.writer(f).writerow([stimTime])
 
 # Unterschied zu getLatency?
 def calculateLatency(data_aps, data_stim, norm=True):
