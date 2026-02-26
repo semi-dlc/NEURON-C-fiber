@@ -60,7 +60,7 @@ data_stim = getData(prot=protocol, filetype="stim")
 
 def get_metrics(data_aps, data_stim, Slow025HzStart=1, Slow025HzEnd=90, Fast2HzStart=90, Fast2HzEnd=450, Fast2HzPost30S=458):
     initial_velocity = calculateVelocity(data_aps, data_stim)[0]
-    latency = calculateLatency(spikes[name][dg], data_stim, norm=False)
+    latency = calculateLatency(data_aps, data_stim, norm=False)
     latency_points = [latency[Slow025HzStart], latency[Fast2HzStart], latency[Fast2HzEnd], latency[Fast2HzPost30S]]
     Slow025StartToEnd = (latency[Slow025HzEnd] - latency[Slow025HzStart]) / latency[Slow025HzStart]
     Slow025EndToFast2HzEnd = (latency[Fast2HzEnd] - latency[Slow025HzEnd]) / latency[Slow025HzEnd]

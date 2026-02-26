@@ -369,6 +369,8 @@ def setStimulationProtocol(axon, prot, previousStim):
         vec, delay = getCOVIDFull()
     elif prot==43:
         vec, delay = getCOVID2Hz(n=50)
+    elif prot==44:
+        vec, delay = getCOVIDShort()
     else:#Get protocol from file
         vec, delay = getProtFromFile(prot)
         
@@ -405,6 +407,7 @@ def setStimulationProtocol(axon, prot, previousStim):
         i.dur = 0.5 # ms
         i.amp = 0.07 # nA
 
+        # a bit stronger
         i.dur = 0.5 # ms
         i.amp = 0.1 # nA
         #working
@@ -553,6 +556,24 @@ def getCOVIDFull():
     #print(vec)
     delay = delay+100
     return vec, delay
+
+def getCOVIDShort():
+    vec=[]
+    delay = 10
+    vec.append(delay)
+    for x in range(10):# 360 pulses with 0.25Hz frequency, 6min
+        delay = delay+4000
+        vec.append(delay)
+    for x in range(20):# 360 pulses with 2Hz frequency, 3min
+        delay = delay+500
+        vec.append(delay)
+    for x in range(20):# 180 pulses with 0.25Hz frequency, 3min
+        delay = delay+4000
+        vec.append(delay)
+    #print(vec)
+    delay = delay+100
+    return vec, delay
+
 
 # in us
 def getCOVIDFullTime(n):
