@@ -51,7 +51,7 @@ def getData(path="Results", filetype="potential", prot=1, scalingFactor=1, tempB
         return data
     return None
 
-
+# Unterschied zu getLatency?
 def calculateLatency(data_aps, data_stim, norm=True):
     l = np.zeros(len(data_stim))
     j=0
@@ -81,4 +81,4 @@ def calculateLatency(data_aps, data_stim, norm=True):
 # dx in mm
 # output in mm/us = m/ms
 def calculateVelocity(data_aps, data_stim, dx=125):
-    return dx / calculateLatency(data_aps, data_stim)
+    return dx / calculateLatency(data_aps, data_stim, norm=False)
