@@ -448,15 +448,15 @@ def run(prot=1, path="Results", scalingFactor=1,  dt=0, previousStim=False, temp
     while(h.t<tstop):
         #save data
         if h.t >= t2:
-            '''
+
             #save membrane potential
-            with open(filename,'a', newline='') as f:
-                csv.writer(f).writerow([h.t, axon[1](0).v, axon[1](0.25).v, axon[1](0.5).v, axon[1](0.75).v, axon[1](1).v, axon[3](0).v, axon[3](0.25).v, axon[3](0.5).v, axon[3](0.75).v, axon[3](1).v])
+            #with open(filename,'a', newline='') as f:
+            #    csv.writer(f).writerow([h.t, axon[1](0).v, axon[1](0.25).v, axon[1](0.5).v, axon[1](0.75).v, axon[1](1).v, axon[3](0).v, axon[3](0.25).v, axon[3](0.5).v, axon[3](0.75).v, axon[3](1).v])
                 
             #save concentrations
-            with open(filenameConc,'a', newline='') as f:
-                csv.writer(f).writerow([h.t, axon[3](1).nai, axon[3](1).ki, axon[3](1).nao, axon[3](1).ko, axon[3](1).ena, axon[3](1).ek])
-            '''
+            #with open(filenameConc,'a', newline='') as f:
+            #    csv.writer(f).writerow([h.t, axon[3](1).nai, axon[3](1).ki, axon[3](1).nao, axon[3](1).ko, axon[3](1).ena, axon[3](1).ek])
+
             t2=h.t+300
             j=j+1
             if j>=10:
