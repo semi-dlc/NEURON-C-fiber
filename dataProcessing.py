@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 import os
+import csv
+
+from stimulationProtocols import getCOVIDShort, getCOVIDFull
+
 
 #filename can't be too long, full path can't be more than 255 characters
 #therefore values are rounded!
@@ -80,7 +84,25 @@ def getData(path="Results", filetype="potential", prot=1, scalingFactor=1, tempB
         return data
     return None
 
+def writeStim(path="Results", prot=1, scalingFactor=0.1):
+    if prot==42:
+        func = getCOVIDFull
+    elif prot==44:
+        func = getCOVIDShort
+    else:
+        func = lambda x: (None,None)
 
+    vec, delay = func()
+
+    fileStim = getFilename(path, prot=prot, filetype="stim", scalingFactor=scalingFactor)
+    with open(fileStim, 'w', newline='') as f:
+        csv.writer(f).writerow(["StimTime"])
+
+    for stimTime in vec:
+        with open(fileStim, 'a', newline='') as f:
+            csv.writer(f).writerow([stimTime])
+
+# Unterschied zu getLatency?
 def calculateLatency(data_aps, data_stim, norm=True):
     l = np.zeros((len(data_stim),2))
     j=0
@@ -252,3 +274,9 @@ def getRealDataODP(filename):
     data=data.drop(['unit class', 'unit type'], axis=1)
     return data, CM, CMi, VHT
     
+# this can be written so much more efficiently
+# data_aps, data_stim in us
+# dx in mm
+# output in mm/us = m/ms
+def calculateVelocity(data_aps, data_stim, dx=125):
+    return dx / calculateLatency(data_aps, data_stim, norm=False)

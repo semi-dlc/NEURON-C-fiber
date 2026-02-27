@@ -1,8 +1,10 @@
 /.idea
 *.pyc
 *.txt
+/MOD_C-fiber
 *.o
 *.c
 /Results
 MOD_Tigerholm/nrnmech.dll
+/temp
 /Results_02256
