@@ -27,10 +27,10 @@ def run(prot=1, path="Results", scalingFactor=1,  dt=0, previousStim=False, temp
     
     #what do you want to save?
     savePotential=True
-    saveCurrents=True
-    saveGating=True
+    saveCurrents=False
+    saveGating=False
     saveSpikes=True
-    saveConcentrations=True
+    saveConcentrations=False
     saveStimulation=True
     saveParameters=True
 
@@ -41,7 +41,10 @@ def run(prot=1, path="Results", scalingFactor=1,  dt=0, previousStim=False, temp
 
     if saveParameters:
         #save parameter values
-        fileParams = str(path)+'/params'+'_Prot'+str(prot)+'.csv'
+        fileParams = str(path)+'/params'+ dataProcessing.getFileSuffix(prot, scalingFactor, tempBranch, tempParent,
+                gPump, gNav17, gNav17Parent, gNav18, gNav18Parent, gNav19,
+               gKs, gKf, gH, gKdr, gKna, vRest,
+               sine, ampSine, particleNr)
         #if file does not exist, create it
         #if not os.path.isfile(fileParams):
         with open(fileParams,'w', newline='') as f:
@@ -414,6 +417,7 @@ def run(prot=1, path="Results", scalingFactor=1,  dt=0, previousStim=False, temp
       
     
     #fileSuffix="_particle"+str(particleNr)+".csv"
+
     '''
     if savePotential:
         filename = str(path)+'/potential'+fileSuffix
@@ -421,7 +425,8 @@ def run(prot=1, path="Results", scalingFactor=1,  dt=0, previousStim=False, temp
         #creates file, deletes content, if file already exists
         with open(filename,'w', newline='') as f:
             csv.writer(f).writerow(["Time", "Axon 1 0", "Axon 1 0.25", "Axon 1 0.5", "Axon 1 0.75", "Axon 1 1", "Axon 3 0", "Axon 3 0.25", "Axon 3 0.5","Axon 3 0.75","Axon 3 1"])
-    
+    '''
+    '''
     if saveConcentrations:
         filenameConc = str(path)+'/concentrations'+fileSuffix
         #creates file, deletes content, if file already exists
@@ -438,6 +443,15 @@ def run(prot=1, path="Results", scalingFactor=1,  dt=0, previousStim=False, temp
             for stimTime in vec:
                 csv.writer(f).writerow([stimTime])
         #print("saved stim, path: ", fileStim)
+
+    if savePotential:
+        #Parent
+        #save membrane potential
+        filename = str(path)+'/potential_parent'+fileSuffix
+
+        #creates file, deletes content, if file already exists
+        with open(filename,'w', newline='') as f:
+            csv.writer(f).writerow(["Time", "Potential"])
     
     #start simulation
     tstop = delay

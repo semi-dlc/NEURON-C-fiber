@@ -32,9 +32,23 @@ def getFileSuffix(prot=1, scalingFactor=1, tempBranch=32, tempParent=37,
                     #+'_ampSine'+str(ampSine)
                     +'.csv')
     '''
-    fileSuffix=('_Prot'+str(prot)
-                    +'_particle'+str(particleNr)
-                    +'.csv')
+    r=6
+    fileSuffix = ('_Prot' + str(prot)
+                  + '_scale' + str(scalingFactor)
+                  + '_gPump' + str(round(gPump, r))
+                  + '_gNav17' + str(round(gNav17, r))
+                  + '_gNav17P' + str(round(gNav17Parent, r))
+                  + '_gNav18' + str(round(gNav18, r))
+                  + '_gNav18P' + str(round(gNav18Parent, r))
+                  + '_gNav19' + str(round(gNav19, r))
+                  + '_gKs' + str(round(gKs, r))
+                  + '_gKf' + str(round(gKf, r))
+                  + '_gH' + str(round(gH, r))
+                  + '_gKdr' + str(round(gKdr, r))
+                  + '_gKna' + str(round(gKna, r))
+                  + '_vRest' + str(vRest)
+
+                  + '.csv')
     return fileSuffix
 
 #filetype can be "potential", "spikes" or "stim"

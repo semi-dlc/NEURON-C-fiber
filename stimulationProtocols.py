@@ -564,7 +564,7 @@ def setStimulationProtocol(axon, prot, previousStim=False):
         i.dur = 0.5 # ms
         #i.amp = 0.1 # nA: threshold for model with sacling=0.1: 0.05nA, stim:0.1nA
         #i.amp = 0.075 # to make APs more likely to fail
-        i.amp=0.08
+        i.amp=0.2
         #i.amp = 0.14 # nA: threshold for model with sacling=0.5: 0.07nA, stim: 0.14nA
         #i.amp = 0.18 # nA: threshold for model with sacling=1: 0.09nA, stim: 0.18nA
         

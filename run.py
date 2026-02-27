@@ -21,8 +21,8 @@ vRest = -55
 
 param_orig = [
     gPump,
-    gNav17,
-    gNav18,
+    gNav17Parent,
+    gNav18Parent,
     gNav19,
     gKs,
     gKf,
@@ -31,7 +31,7 @@ param_orig = [
     gKna
 ]
 
-param_names = ['gPump', 'gNav17', 'gNav18', 'gNav19', 'gKs', 'gKf', 'gH', 'gKdr', 'gKna']
+param_names = ['gPump', 'gNav17Parent', 'gNav18Parent', 'gNav19', 'gKs', 'gKf', 'gH', 'gKdr', 'gKna']
 
 changes = [-0.2, -0.15, -0.1, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
 
@@ -52,8 +52,9 @@ if __name__ == '__main__':
                 'sine': False,
                 'scalingFactor': 0.1,
                 'gPump': param[0],
-                'gNav17': param[1],
-                'gNav18': param[2],
+                'gNav17Parent': param[1],
+                'gNav18Parent'
+                '': param[2],
                 'gNav19': param[3],
                 'gKs': param[4],
                 'gKf': param[5],
@@ -64,7 +65,7 @@ if __name__ == '__main__':
             }
 
             # Submit job to pool with keyword arguments
-            result = pool.apply_async(main.run, kwds=kwargs)
+            result = pool.apply_async(main_CMi.run, kwds=kwargs)
             results.append(result)
 
         # Wait for all results to complete
