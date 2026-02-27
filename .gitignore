@@ -1,0 +1,8 @@
+/.idea
+*.pyc
+*.txt
+*.o
+*.c
+MOD_Tigerholm/nrnmech.dll
+/Results
+/Results_02256
