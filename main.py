@@ -81,7 +81,7 @@ def run(prot=1, scalingFactor=1, dt=0, previousStim=False, tempBranch=32, tempPa
     ps.plot(plt)
     plt.show(0)
     '''
-    
+
     for i in range(6):
         condFactor=1
         # if i==1 : injection patch is sealed -> no spike is transmitted
@@ -185,7 +185,7 @@ def run(prot=1, scalingFactor=1, dt=0, previousStim=False, tempBranch=32, tempPa
         print(prot)
         prot = prot[2]
     
-    
+
     #filename can't be too long, full path can't be more than 255 characters
     #therefore values are rounded!
     '''
@@ -209,6 +209,10 @@ def run(prot=1, scalingFactor=1, dt=0, previousStim=False, tempBranch=32, tempPa
                 +'_ampSine'+str(ampSine)
                 +'.csv')
     filename = path + 'potential' + fileSuffix
+
+    if os.path.isfile(filename):
+        print(f"Simulation already exists under name {filename}")
+        return
 
     if log_potential:
         #creates file, deletes content, if file already exists

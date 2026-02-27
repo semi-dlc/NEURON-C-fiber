@@ -29,9 +29,9 @@ param_orig = [
     gKna
 ]
 
-#param_names = ['gPump', 'gNav17', 'gNav18', 'gNav19', 'gKs', 'gKf', 'gH', 'gKdr', 'gKna']
+param_names = ['gPump', 'gNav17', 'gNav18', 'gNav19', 'gKs', 'gKf', 'gH', 'gKdr', 'gKna']
 
-changes = [-0.18, -0.15, -0.05, -0.03, 0.03, 0.05, 0.15, 0.18]
+changes = [-0.2, -0.15, -0.1, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2]
 
 for dg in changes:
     for i, x in enumerate(param_orig):
