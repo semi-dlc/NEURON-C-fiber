@@ -552,12 +552,12 @@ def setStimulationProtocol(axon, prot, previousStim=False):
         i.dur = 0.5 # ms
         #i.amp = 0.1 # nA: threshold for model with sacling=0.1: 0.05nA, stim:0.1nA
         #i.amp = 0.075 # to make APs more likely to fail
-        i.amp=0.08
+        i.amp=0.2
         #i.amp = 0.14 # nA: threshold for model with sacling=0.5: 0.07nA, stim: 0.14nA
         #i.amp = 0.18 # nA: threshold for model with sacling=1: 0.09nA, stim: 0.18nA
         
         #working
-        #i.dur = 5 # ms 
+        #i.dur = 5 # ms
         #i.amp = 0.02 # nA
         #not working
         #i.dur = 5 # Tigerholm
@@ -662,6 +662,70 @@ def getTigerholmLowfreq():
     #print(vec)
     delay = delay+100
     return vec, delay
+
+# adapted from getTigerholmHighFreq
+def getCOVID2Hz(n=360):
+    vec=[]
+    delay = 10
+    vec.append(delay)
+    for x in range(n):#360 pulses with 2Hz frequency
+        delay = delay+500
+        vec.append(delay)
+    #print(vec)
+    delay = delay+100
+    return vec, delay
+
+def getCOVID025Hz():
+    vec=[]
+    delay = 10
+    vec.append(delay)
+    for x in range(360):#360 pulses with 0.25Hz frequency
+        delay = delay+4000
+        vec.append(delay)
+    #print(vec)
+    delay = delay+100
+    return vec, delay
+
+def getCOVIDFull():
+    vec=[]
+    delay = 10
+    vec.append(delay)
+    for x in range(90):# 360 pulses with 0.25Hz frequency, 6min
+        delay = delay+4000
+        vec.append(delay)
+    for x in range(360):# 360 pulses with 2Hz frequency, 3min
+        delay = delay+500
+        vec.append(delay)
+    for x in range(45):# 180 pulses with 0.25Hz frequency, 3min
+        delay = delay+4000
+        vec.append(delay)
+    #print(vec)
+    delay = delay+100
+    return vec, delay
+
+def getCOVIDShort():
+    vec=[]
+    delay = 10
+    vec.append(delay)
+    for x in range(10):# 360 pulses with 0.25Hz frequency, 6min
+        delay = delay+4000
+        vec.append(delay)
+    for x in range(20):# 360 pulses with 2Hz frequency, 3min
+        delay = delay+500
+        vec.append(delay)
+    for x in range(20):# 180 pulses with 0.25Hz frequency, 3min
+        delay = delay+4000
+        vec.append(delay)
+    #print(vec)
+    delay = delay+100
+    return vec, delay
+
+
+# in us
+def getCOVIDFullTime(n):
+    vec, delay = getCOVIDFull()
+    return vec[n]
+
         
 def getProtFromFile(filename):    
     lines = open(filename).readlines()
