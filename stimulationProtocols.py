@@ -265,6 +265,8 @@ def setStimulationProtocol(axon, prot, previousStim=False):
             vec.append(offset+i*500)
         lastPulse=100*500
         delay=lastPulse+100
+
+
     elif prot=="DP":#old Doppelpuls
         #20 pulses at 0.25 Hz -> one pulse every 4 seconds
         #to stabilize latency
@@ -515,19 +517,12 @@ def setStimulationProtocol(axon, prot, previousStim=False):
             lastPulse=lastPulse+numberOfPulses*4000
 
         delay=lastPulse+1000
-
-    elif prot==40: # Long COVID
-        vec, delay = getCOVID2Hz()
-
     elif prot==41:
         vec, delay = getCOVID025Hz()
-
     elif prot==42:
         vec, delay = getCOVIDFull()
     elif prot==43:
         vec, delay = getCOVID2Hz(n=50)
-    elif prot==44:
-        vec, delay = getCOVIDShort()
     else:#Get protocol from file
         vec, delay = getProtFromFile(prot)
         

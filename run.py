@@ -1,22 +1,22 @@
 import neuron as neuron
-import main_CMi
+import main_CM
 from multiprocessing import Pool
 
 neuron.load_mechanisms('./MOD_Tigerholm')
 
 params = []
 
-gPump = -0.00485891709589456
-gNav17 = 0.33198932295899997
-gNav17Parent=0.22831806252579703
-gNav18 = 0.04520936848183172
-gNav18Parent=0.2411879110860178
-gNav19 = 0.0032208034421239012
-gKs = 0.0030962055552702606
-gKf = 0.025994684685553986
-gH = 0.009167424690232623
-gKdr = 0.013875365047132446
-gKna = 0.0014444412024341238
+gPump = -0.0025
+gNav17 = 0.24686453257354574
+gNav17Parent=0.13115152763095123
+gNav18 = 0.37673567973121774
+gNav18Parent=0.23439203005798895
+gNav19 = 0.00017254238997420438
+gKs = 0.008865226128662577
+gKf = 0.02709394494148292
+gH = 0.014140202887083592
+gKdr = 0.008469950837206652
+gKna = 0.001398204170298818
 vRest = -55
 
 param_orig = [
@@ -53,8 +53,7 @@ if __name__ == '__main__':
                 'scalingFactor': 0.1,
                 'gPump': param[0],
                 'gNav17Parent': param[1],
-                'gNav18Parent'
-                '': param[2],
+                'gNav18Parent': param[2],
                 'gNav19': param[3],
                 'gKs': param[4],
                 'gKf': param[5],
@@ -65,7 +64,7 @@ if __name__ == '__main__':
             }
 
             # Submit job to pool with keyword arguments
-            result = pool.apply_async(main_CMi.run, kwds=kwargs)
+            result = pool.apply_async(main_CM.run, kwds=kwargs)
             results.append(result)
 
         # Wait for all results to complete

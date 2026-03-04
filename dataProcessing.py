@@ -293,4 +293,4 @@ def getRealDataODP(filename):
 # dx in mm
 # output in mm/us = m/ms
 def calculateVelocity(data_aps, data_stim, dx=125):
-    return dx / calculateLatency(data_aps, data_stim, norm=False)
+    return dx / calculateLatency(data_aps, data_stim, norm=False)[:,1]
