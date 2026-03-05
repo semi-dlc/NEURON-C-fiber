@@ -1,5 +1,11 @@
 #### Word to Markdown conversion with LLM.
 
+## Values from paper
+experiment_values_covid = [0.52, 5.52, 31.8, 31.6, 62.2]
+experiment_values_healthy = [0.43, 4.09, 36, 19.7, 96.2]
+factors = [1.20930233, 1.34963325, 0.88333333, 1.60406091, 0.64656965]
+
+
 ## Influence of Conductances on Latency
 
 | Conductance | Effect on Latency |
@@ -38,3 +44,4 @@
 - Consider dropping gNav17, gNav19, and gKdr to focus on the more influential variables
 - If one conductance plays a big role in the spike process, does increasing the conductance increase the sensitivity w.r.t this conductance?
 - Is it expected that the relations are so nonlinear? Intuitively, if the HH system is strongly nonlinear, the relations could be nonlinear as well. Especially gKf, gNav19, gNav17 have weird shapes. In the meanwhile, currents that are important for ADS (gNav18), seem to have good scaling.
+- Can the conductances be treated as independent from each other in the influence onto the ADS recovery? -> We assume so for now to study the effect that each conductance has onto the ADS recovery.
