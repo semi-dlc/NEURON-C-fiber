@@ -1,10 +1,15 @@
 #### Word to Markdown conversion with LLM.
 
 ## Values from paper
+For variables ["CV", "0to025", "025to2", "30sRecovery", "50%RecoveryTime"]:
+CMi:
 experiment_values_covid = [0.52, 5.52, 31.8, 31.6, 62.2]
 experiment_values_healthy = [0.43, 4.09, 36, 19.7, 96.2]
-factors = [1.20930233, 1.34963325, 0.88333333, 1.60406091, 0.64656965]
-
+experiment_factors = [1.20930233, 1.34963325, 0.88333333, 1.60406091, 0.64656965]
+CM:
+experiment_values_covid = [0.67, 0.01, 32.8, 33.6, 46.65]
+experiment_values_healthy = [0.72, 0.16, 25.95, 38.95, 37]
+experiment_factors =  [0.93055556, 0.0625    , 1.26396917, 0.86264442, 1.26081081]
 
 ## Influence of Conductances on Latency
 
