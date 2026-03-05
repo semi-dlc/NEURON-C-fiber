@@ -29,6 +29,8 @@ For CM/Type 1A:
 
 ## Pending: Conclusion which channels are involved now.
 
+## add: make timeto50% percentage of percentage
+
 ## Influence of Conductances on Latency
 
 | Conductance | Effect on Latency |
