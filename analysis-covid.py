@@ -81,10 +81,10 @@ for name, dg_dict in params_dict.items():
             filetype="spikes",
             scalingFactor=0.1,
             gPump=param_dict['gPump'],
-            gNav17=param_dict['gNav17Parent'],# due to human error in run.py
-            gNav17Parent=param_dict['gNav17'],
-            gNav18=param_dict['gNav18Parent'],  # due to human error in run.py
-            gNav18Parent=param_dict['gNav18'],
+            gNav17=param_dict['gNav17'],# due to human error in run.py
+            gNav17Parent=param_dict['gNav17Parent'],
+            gNav18=param_dict['gNav18'],  # due to human error in run.py
+            gNav18Parent=param_dict['gNav18Parent'],
             gNav19=param_dict['gNav19'],
             gKs=param_dict['gKs'],
             gKf=param_dict['gKf'],
@@ -181,8 +181,9 @@ for name, dg_dict in params_dict.items():
 
         metric = get_metrics(spikes[name][dg], data_stim)
 
+        recovery_50_percent_threshold = (latencies[name][dg][Fast2HzStart] + latencies[name][dg][Fast2HzEnd]) / 2
         for n in np.arange(Fast2HzEnd, SimulationEnd):
-            if latencies[name][dg][n] < recovery_50_threshold:
+            if latencies[name][dg][n] < recovery_50_percent_threshold:
                 slowing_dict[name][dg][slowing_name[4]] = getCOVIDFullTime(n) - getCOVIDFullTime(Fast2HzStart)
                 break
 
