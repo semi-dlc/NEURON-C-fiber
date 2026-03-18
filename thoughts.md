@@ -1,3 +1,11 @@
+## Problem with finding channels which explain the change:
+Problematic:
+- The two different models show similar behavior when changing the channel conductances
+- Which is expected since only the parameters change, but not the equations themselves
+- All changes in the metrics are more or less linear wrt change in conductance in CM, but CMi has more nonlinearities. For vRest, both are nonlinear, with maximum close to dg = 0
+- Therefore, it is hard to find a single parameter, or multiple parameters, that could explain all the changes (because CM/CMi recording went in opposite directions)
+- no speeding observed for all parameter changes.
+
 #### Word to Markdown conversion with LLM.
 
 ## Values from paper
