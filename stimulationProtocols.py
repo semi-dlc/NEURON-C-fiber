@@ -694,6 +694,7 @@ def getCOVID025Hz():
     return vec, delay
 
 def getCOVIDFull():
+    """Stimulation protocol used by DiRibeiro (2026) on long COVID patients."""
     vec=[]
     delay = 10
     vec.append(delay)

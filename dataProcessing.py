@@ -288,7 +288,7 @@ def getRealDataODP(filename):
     data=data.drop(['unit class', 'unit type'], axis=1)
     return data, CM, CMi, VHT
     
-# this can be written so much more efficiently
+
 # data_aps, data_stim in us
 # dx in mm
 # output in mm/us = m/ms

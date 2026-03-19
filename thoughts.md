@@ -1,3 +1,50 @@
+## Problem with finding channels which explain the change:
+Problematic:
+- The two different models show similar behavior when changing the channel conductances
+- Which is expected since only the parameters change, but not the equations themselves
+- All changes in the metrics are more or less linear wrt change in conductance in CM, but CMi has more nonlinearities. For vRest, both are nonlinear, with maximum close to dg = 0
+- Therefore, it is hard to find a single parameter, or multiple parameters, that could explain all the changes (because CM/CMi recording went in opposite directions)
+- no speeding observed for all parameter changes.
+
+## Brute-force finding channels: notes for thinking
+vRest is ignored for now as it mainly decreases all metrics when deviated in both directions.
+CMi:
+- gNav18 +30% explains 1, 2, 3, 5. 4 is not affected a lot. 1 is only partially explained.
+- Which channels affect 4?:
+    - Decrease gPump, which is good for 2, and 3 (if between -60% - -40%), but is undefined for 5
+    - Decrease gNav17 by around -40%, which is strongly bad for 1 (effect is stronger than increase of gNav18 on 1), good for 2, strongly bad for 3, and good for 5. We should not consider it because it is so bad on 1 and 3.
+    - Increase gNav19: Has little effect, we should not consider this atm.
+    - Decrease gKs by around -20%, which barely affects 1 and 3, is good for 2, and is bad for 5.
+    - Increase gKdr: Is bad for 1, good for 2, bad for 3, good for 4, good for 5.
+    - Increase gKNa: Does not change 1, good for 2, good for 3 (when excessive ~80%), good for 4, bad for 5 (metric undefined for increasing)
+- -> Decreasing gKs is good if we can compensate 5 somehow. We could try increasing gNav17 in the meanwhile so 1 is compensated. gNav17 affects 2 less strong than gNav18. However, increasing gNav17 worsens 5, and gNav18 does not affect 5 enough to compensate for the errors of gKs and gNav17 in 5.
+- -> If we ignore 5, a combination of increasing gNav18, decreasing gKs, and potentially increasing gNav17 would be able to explain it.
+- if we increase gH also, gH could explain 5 while not affecting 1-4 a lot.
+- if we increase gKdr slightly (~20%), 2, 4, 5 are more correct but 3 is strongly off, and 1 is slightly off.
+- -> try combinations of increasing gNav18, decreasing gKs, increasing gNav17, and increasing gH or gKdr.  
+
+CM:
+- Metric 1: decrease gNav17, decrease gNav18 slightly, increase gH, increase gKdr
+- decrease gNav17 ~-40%: Explains 1, does not change 2, explains 3 partially, is bad for 4, does not change 5 -> look at 2, 4, 5
+- decrease gNav18 ~-30%: Explains 1, explains 2, is bad for 3 (stronger than gNav17), explains 4 (stronger than gNav17), barely affects 5 -> Look at 3, 5.  
+- 5 can be explained by:
+    - decreasing gPump
+    - decreasing gKs (but the metric is undefined for <-20%)
+    - decreasing gH (partially)
+    - increasing gKna (but the metric is undefined for >20%)
+- 3 can be explained by:
+    - decreasing gPump
+    - decreasing gKs (~-20%) 
+    - decreasing gH
+    - increasing gKdr
+    - increasing gKNa
+- these are basically the same channels -> which one affects the other ones the least?:
+    - 1 is ok for basically all
+    - 2 is not strongly affected by decreasing gH -> let's look at gH
+    - gH would influence 4 negatively (roughly the same as gNav18 influences 4 positively), influence 1 negatively (but compensated by gNav17, gNav18), influence 2 negatively (but compensated by gNav18)
+- -> try combinations of  decreasing gNav17, gNav18, and decreasing gH
+- 5 is still not well-explained
+- -> right now 5 can be explained a bit, but 4 not at all -> decrease effect of gH again? But then other metrics fail again.
 #### Word to Markdown conversion with LLM.
 
 ## Values from paper
