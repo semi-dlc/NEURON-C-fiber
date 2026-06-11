@@ -1,3 +1,5 @@
+# I used this script to iteratively find candidates with closer alignment after pertubating only one conductance in analysis-COVID.ipynb.
+
 import neuron
 import main_CMi
 from multiprocessing import Pool

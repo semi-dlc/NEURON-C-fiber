@@ -1,3 +1,5 @@
+# grid search over conductance parameter space
+
 import neuron as neuron
 import main_CMi
 from multiprocessing import Pool
